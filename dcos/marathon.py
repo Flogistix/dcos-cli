@@ -54,7 +54,12 @@ def _to_exception(response):
     if isinstance(response, Exception):
         return DCOSException(_default_marathon_error(str(response)))
 
-    message = response.json().get('message')
+    try:
+        message = response.json().get('message')
+    except ValueError:
+        return DCOSException('Error: Could not parse response. {}'.format(
+                             response.reason))
+
     if message is None:
         errs = response.json().get('errors')
         if errs is None:

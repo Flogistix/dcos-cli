@@ -361,6 +361,14 @@ def test_update_bad_type():
         assert stdout == b''
 
 
+def test_update_invalid_json():
+    returncode, stdout, stderr = exec_command(
+        ['dcos', 'marathon', 'app', 'update', '{', 'instances'])
+    assert returncode == 1
+    assert stdout == b''
+    assert stderr.decode() == 'Error: Could not parse response. Bad Request\n'
+
+
 def test_update_app():
     with _zero_instance_app():
         returncode, stdout, stderr = exec_command(
