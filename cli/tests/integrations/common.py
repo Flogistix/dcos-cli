@@ -263,11 +263,17 @@ def list_deployments(expected_count=None, app_id=None):
 
     returncode, stdout, stderr = exec_command(cmd)
 
+    if app_id and expected_count == 0:
+        msg = "There are no deployments for '{}'\n".format(app_id)
+        assert stderr == msg.encode('utf-8')
+        return
+
     result = json.loads(stdout.decode('utf-8'))
 
     assert returncode == 0
     if expected_count is not None:
         assert len(result) == expected_count
+
     assert stderr == b''
 
     return result
