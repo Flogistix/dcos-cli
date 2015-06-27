@@ -401,7 +401,14 @@ def _list(json_, endpoints, app_id, package_name):
 
             results.append(pkg_info)
 
-    emitting.publish_table(emitter, results, tables.package_table, json_)
+    if results:
+        emitting.publish_table(emitter, results, tables.package_table, json_)
+    else:
+        msg = ("There are currently no installed packages. "
+               "Please use `dcos package install` to install a package.")
+        if json_:
+            msg = json.dumps([msg])
+        emitter.publish(msg)
     return 0
 
 

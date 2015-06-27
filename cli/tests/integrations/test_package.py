@@ -658,8 +658,13 @@ def _install_chronos(
         stdin=stdin)
 
 
+EMPTY_MSG = ("There are currently no installed packages. Please use "
+             "`dcos package install` to install a package.").encode("utf-8")
+
+
 def _list(args=['--json'],
-          stdout=b'[]\n'):
+          stdout='{}\n'.format(json.dumps([EMPTY_MSG]))):
+
     assert_command(['dcos', 'package', 'list'] + args,
                    stdout=stdout)
 
