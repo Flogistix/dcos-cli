@@ -107,7 +107,7 @@ def _segment_request(path, data):
         requests.post('{}/{}'.format(SEGMENT_URL, path),
                       json=data,
                       auth=HTTPBasicAuth(key, ''),
-                      timeout=1)
+                      timeout=(1, 1))
     except Exception as e:
         logger.exception(e)
 
