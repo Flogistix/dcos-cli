@@ -494,7 +494,7 @@ def _search_rank(pkg, query):
         if q.endswith(wildcard_symbol):
             q = '^{}'.format(q)
         else:
-            q = ('{}$'.format(q))
+            q = '{}$'.format(q)
 
         if re.match(q, pkg['name'].lower()):
             result += 2.0
