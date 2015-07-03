@@ -454,6 +454,10 @@ def _search(json_, query):
                            results,
                            tables.package_search_table,
                            json_)
+    if not any(map(
+            lambda element: len(element.get('packages', [])) > 0, results
+    )):
+        sys.stderr.write('No packages found for query {}\n'.format(query))
     return 0
 
 
