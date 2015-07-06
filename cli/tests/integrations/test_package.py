@@ -564,7 +564,7 @@ def test_search():
     assert b'"packages": []' in stdout
     assert b'"source": "https://github.com/mesosphere/universe/archive/\
 version-1.x.zip"' in stdout
-    assert stderr == b''
+    assert stderr == b'No packages found for query xyzzy\n'
 
     returncode, stdout, stderr = exec_command(
         ['dcos', 'package', 'search', '--json'])
