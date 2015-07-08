@@ -2,12 +2,13 @@
 
 Usage:
     dcos node --info
-    dcos node [--json]
+    dcos node [--json --colors]
 
 Options:
     -h, --help    Show this screen
     --info        Show a short description of this subcommand
     --json        Print json-formatted nodes
+    --colors      Json syntax highlighting
     --version     Show version
 """
 
@@ -53,7 +54,7 @@ def _cmds():
 
         cmds.Command(
             hierarchy=['node'],
-            arg_keys=['--json'],
+            arg_keys=['--json', '--colors'],
             function=_list),
     ]
 
@@ -69,20 +70,22 @@ def _info():
     return 0
 
 
-def _list(json_):
+def _list(json_, colors):
     """List dcos nodes
 
     :param json_: If true, output json.
         Otherwise, output a human readable table.
     :type json_: bool
     :returns: process return code
+    :param colors: Json syntax highlighting if True
+    :type colors: bool
     :rtype: int
     """
 
     client = mesos.MesosClient()
     slaves = client.get_state_summary()['slaves']
     if json_:
-        emitter.publish(slaves)
+        emitter.publish(slaves, colors)
     else:
         table = tables.slave_table(slaves)
         output = str(table)

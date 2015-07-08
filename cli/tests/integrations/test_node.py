@@ -12,12 +12,13 @@ def test_help():
 
 Usage:
     dcos node --info
-    dcos node [--json]
+    dcos node [--json --colors]
 
 Options:
     -h, --help    Show this screen
     --info        Show a short description of this subcommand
     --json        Print json-formatted nodes
+    --colors      Json syntax highlighting
     --version     Show version
 """
     assert_command(['dcos', 'node', '--help'], stdout=stdout)
